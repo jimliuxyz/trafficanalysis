@@ -9,7 +9,7 @@ services:
       dockerfile: dockerfile
     ports:
       - 30180:80  # for frontendn
-      - 30181:5001  # for backend
+      - 30181:5000  # for backend
     # volumes:
     #   - ./docker_volumes/context:/var/tmp
     #   - ./docker_volumes/context/tmp/.well-known/acme-challenge:/usr/share/nginx/html/.well-known/acme-challenge
