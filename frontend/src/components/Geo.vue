@@ -33,7 +33,7 @@ async function draw() {
   const g = svg.append("g");
 
   const [jsondata, aaa] = await Promise.all([
-    d3.json("src/assets/COUNTY_MOI_1090820.json"),
+    d3.json("COUNTY_MOI_1090820.json"),
     d3.json(`${Env.APIHOST}/accident/geo`),
   ]);
 
