@@ -1,0 +1,16 @@
+version: "3.2"
+
+services:
+  trafficanalysis:
+    image: jimliuxyz/trafficanalysis:latest
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 30180:5173  # for frontendn
+      - 30181:5001  # for backend
+    # volumes:
+    #   - ./docker_volumes/context:/var/tmp
+    #   - ./docker_volumes/context/tmp/.well-known/acme-challenge:/usr/share/nginx/html/.well-known/acme-challenge
+    # entrypoint: ["/bin/sh", "-c", "cd /var/tmp/frontend; chmod 777 entrypoint.sh; ./entrypoint.sh"]
