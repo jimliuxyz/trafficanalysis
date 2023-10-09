@@ -67,7 +67,7 @@ function draw(words) {
 }
 
 async function getData() {
-  const path = "http://localhost:5001/accident/weather";
+  const path = "${Env.APIHOST}/accident/weather";
   try {
     const resp = await axios.get(path);
     console.log(resp.data.data);

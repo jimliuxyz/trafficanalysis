@@ -25,6 +25,7 @@ import { ref, onMounted } from "vue";
 import * as d3 from "d3";
 import * as topojson from "topojson";
 import { F } from "../utils/F";
+import { Env } from "../defines/env";
 
 async function draw() {
   const width = F.canvasWidth();
@@ -33,7 +34,7 @@ async function draw() {
 
   const [jsondata, aaa] = await Promise.all([
     d3.json("src/assets/COUNTY_MOI_1090820.json"),
-    d3.json("http://localhost:5001/accident/geo"),
+    d3.json(`${Env.APIHOST}/accident/geo`),
   ]);
 
   const projectmethod = d3

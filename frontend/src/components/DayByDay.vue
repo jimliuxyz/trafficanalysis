@@ -6,6 +6,7 @@ import * as d3 from "d3";
 import * as d3a from "d3-array";
 import axios from "axios";
 import { F } from "../utils/F";
+import { Env } from "../defines/env";
 
 let margin = {
   top: 16,
@@ -40,7 +41,7 @@ export default {
   },
   methods: {
     async initBarChartRaceBase() {
-      const path = "http://127.0.0.1:5001/accident/daybyday";
+      const path = `${Env.APIHOST}/accident/daybyday`;
       const resp = await axios.get(path);
       data = resp.data.data.map((d) => ({
         date: d.date,

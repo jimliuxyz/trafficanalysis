@@ -25,3 +25,10 @@ cd client
 npm install
 npm run dev
 ```
+
+# deploy
+
+```sh
+docker-compose -f docker-compose.spa.yml build
+docker-compose -f docker-compose.spa.yml up
+```

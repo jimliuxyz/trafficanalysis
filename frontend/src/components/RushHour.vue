@@ -8,6 +8,7 @@ import { ref, onMounted } from "vue";
 
 import * as d3 from "d3";
 import { F } from "../utils/F";
+import { Env } from "../defines/env";
 
 function draw(data) {
   document.querySelector("#elem-rush-hour svg")?.remove();
@@ -91,7 +92,7 @@ function draw(data) {
 }
 
 async function getData() {
-  const path = "http://localhost:5001/statics/rush_hour";
+  const path = `${Env.APIHOST}/statics/rush_hour`;
   try {
     const resp = await axios.get(path);
     draw(resp.data.data);

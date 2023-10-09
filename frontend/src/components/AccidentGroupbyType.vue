@@ -10,6 +10,7 @@ import * as d3 from "d3";
 import cloud from "d3-cloud";
 import { Type } from "../defines/defines";
 import { F } from "../utils/F";
+import { Env } from "../defines/env";
 
 const state = ref({
   data: ["Hello", "world"].map(function (d) {
@@ -65,7 +66,7 @@ function draw(words) {
 }
 
 async function getData() {
-  const path = "http://localhost:5001/statics/accident_type";
+  const path = `${Env.APIHOST}/statics/accident_type`;
   try {
     const resp = await axios.get(path);
     const data = resp.data.data
