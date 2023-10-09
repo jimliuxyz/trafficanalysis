@@ -47,69 +47,32 @@ def remove_book(book_id):
 
 
 # sanity check route
-@app.route('/ping', methods=['GET'])
+@app.route('/api/ping', methods=['GET'])
 def ping_pong():
     return jsonify('pong!')
 
-
-@app.route('/books', methods=['GET', 'POST'])
-def all_books():
-    response_object = {'status': 'success'}
-    if request.method == 'POST':
-        post_data = request.get_json()
-        BOOKS.append({
-            'id': uuid.uuid4().hex,
-            'title': post_data.get('title'),
-            'author': post_data.get('author'),
-            'read': post_data.get('read')
-        })
-        response_object['message'] = 'Book added!'
-    else:
-        response_object['books'] = BOOKS
-    return jsonify(response_object)
-
-
-@app.route('/books/<book_id>', methods=['PUT', 'DELETE'])
-def single_book(book_id):
-    response_object = {'status': 'success'}
-    if request.method == 'PUT':
-        post_data = request.get_json()
-        remove_book(book_id)
-        BOOKS.append({
-            'id': uuid.uuid4().hex,
-            'title': post_data.get('title'),
-            'author': post_data.get('author'),
-            'read': post_data.get('read')
-        })
-        response_object['message'] = 'Book updated!'
-    if request.method == 'DELETE':
-        remove_book(book_id)
-        response_object['message'] = 'Book removed!'
-    return jsonify(response_object)
-
-
-@app.route('/statics/accident_type', methods=['GET'])
+@app.route('/api/statics/accident_type', methods=['GET'])
 def accident_type():
     res = df.groupby('事故類型及型態')['序號'].count().reset_index(name='count').rename(columns={'事故類型及型態':'type'})
 
     response_object = {'data': json.loads(res.reset_index().to_json(orient='records', force_ascii=False))}
     return jsonify(response_object)
 
-@app.route('/statics/district_accident', methods=['GET'])
+@app.route('/api/statics/district_accident', methods=['GET'])
 def district_accident():
     res = df.groupby('區')['序號'].count().reset_index(name='count').rename(columns={'區':'district'})
 
     response_object = {'data': json.loads(res.reset_index().to_json(orient='records', force_ascii=False))}
     return jsonify(response_object)
 
-@app.route('/statics/rush_hour', methods=['GET'])
+@app.route('/api/statics/rush_hour', methods=['GET'])
 def rush_hour():
     res = df.groupby('時')['序號'].count().reset_index(name='count').rename(columns={'時':'hour'})
 
     response_object = {'data': json.loads(res.reset_index().to_json(orient='records', force_ascii=False))}
     return jsonify(response_object)
 
-@app.route('/accident/geo', methods=['GET'])
+@app.route('/api/accident/geo', methods=['GET'])
 def geo():
     # area_filter = df['區']=='西屯區'
     # res = df[area_filter][['GPS座標X', 'GPS座標Y']].rename(columns = {'GPS座標X':'x', 'GPS座標Y':'y'})
@@ -118,7 +81,7 @@ def geo():
     response_object = {'data': json.loads(res.reset_index().to_json(orient='records', force_ascii=False))}
     return jsonify(response_object)
 
-@app.route('/accident/weather', methods=['GET'])
+@app.route('/api/accident/weather', methods=['GET'])
 def weather():
     area_filter = df['區']=='西屯區'
     res = df.groupby('天候').apply(func=lambda df_gr: pd.Series({
@@ -133,7 +96,7 @@ def weather():
     response_object = {'data': json.loads(res.reset_index().to_json(orient='records', force_ascii=False))}
     return jsonify(response_object)
 
-@app.route('/accident/daybyday', methods=['GET'])
+@app.route('/api/accident/daybyday', methods=['GET'])
 def daybyday():
     area_filter = df['區']=='西屯區'
     res = df.groupby(['區', 'date'])['序號'].count().reset_index(name='count').rename(columns = {'區':'district'})
